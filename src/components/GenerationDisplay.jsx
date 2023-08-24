@@ -6,11 +6,12 @@ import Spinner from 'react-bootstrap/Spinner';
 export default function GenerationDisplay({resetButtonClicked, generateButtonClicked, imageData, durationData, loading}) {
 
     function determineDisplay() {
+        // console.log("HERE IN DISPLAY!")
         // console.log(loading)
         // console.log(durationData)
-        if (loading.showLoadScreen) return <Spinner animation="border" variant="light"/>
-        else if (durationData.done && !durationData.faulted) return <CarouselDisplay imageData={imageData}/>
-        else if (!durationData.done) return <DurationDisplay durationData={durationData}/>
+        if (loading.showLoadScreen || loading.cancelRequest) return <Spinner animation="border" variant="light"/>
+        else if (loading.showImageScreen && imageData && durationData.done && !durationData.faulted) return <CarouselDisplay imageData={imageData}/>
+        else if (!durationData.done && loading.makingRequest) return <DurationDisplay durationData={durationData}/>
         else return
     }
 
@@ -28,7 +29,7 @@ export default function GenerationDisplay({resetButtonClicked, generateButtonCli
 
             <div className="controlDisplay-div">
                 <button id="generate-button" className={`btn btn-danger`} onClick={resetConfirmationCheck}>Reset Settings</button>
-                <button id="generate-button" className={`btn ${loading.makingRequest ? "btn-danger" : "btn-primary"}`} onClick={generateButtonClicked}>{!loading.makingRequest ? "Generate" : "Cancel Request"}</button>
+                <button id="generate-button" className={`btn ${loading.makingRequest || loading.cancelRequest? "btn-danger" : "btn-primary"}`} onClick={generateButtonClicked} disabled={loading.showLoadScreen || loading.cancelRequest?true:false}>{!loading.makingRequest && !loading.cancelRequest? "Generate" : "Cancel Request"}</button>
             </div>
         </div>
     )
