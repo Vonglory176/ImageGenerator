@@ -12,7 +12,8 @@ export default function DurationDisplay({durationData}) {
             
             <h3>Generation Status</h3>
             <h5 id="durationStatus">Time left: {getTranslatedTime()} - Queue position: {durationData.queue_position}</h5>
-            <p id="imageStatus">Pending: {durationData.waiting} - Processing: {durationData.processing} - Finished: {durationData.finished} - Restarted: {durationData.restarted} - Failed: {durationData.faulted ? 1 : 0}</p>
+            <p id="imageStatus">Pending: {durationData.waiting} - Finished: {durationData.finished} - Failed: {durationData.faulted ? 1 : 0}</p>
+            {/* <p id="imageStatus">Pending: {durationData.waiting} - Processing: {durationData.processing} - Finished: {durationData.finished} - Restarted: {durationData.restarted} - Failed: {durationData.faulted ? 1 : 0}</p> */}
         </div>
     )
 }

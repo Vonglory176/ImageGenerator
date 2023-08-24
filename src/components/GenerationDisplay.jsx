@@ -6,9 +6,11 @@ import Spinner from 'react-bootstrap/Spinner';
 export default function GenerationDisplay({resetButtonClicked, generateButtonClicked, imageData, durationData, loading}) {
 
     function determineDisplay() {
+        // console.log(loading)
+        // console.log(durationData)
         if (loading.showLoadScreen) return <Spinner animation="border" variant="light"/>
         else if (durationData.done && !durationData.faulted) return <CarouselDisplay imageData={imageData}/>
-        else if (durationData.done === false) return <DurationDisplay durationData={durationData}/>
+        else if (!durationData.done) return <DurationDisplay durationData={durationData}/>
         else return
     }
 

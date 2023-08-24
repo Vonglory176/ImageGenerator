@@ -37,7 +37,7 @@ export async function imageGenerate(apiKey, dataInput) {
     try {
         const response = await fetch(`https://aihorde.net/api/v2/generate/async`, options)
         let data = await response.json()
-        console.log(data)
+        // console.log(data)
 
         return data
     }

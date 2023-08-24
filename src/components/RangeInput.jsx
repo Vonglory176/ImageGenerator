@@ -6,7 +6,7 @@ export default function RangeInput({field, fieldName, min, max, step, fieldValue
 
     return (
         <div className={`${fieldName}Input-div rangeInput-div`}>
-            <label htmlFor={`${fieldName}Input`}>
+            <label htmlFor={`${fieldName}Input-range`}>
                 {field}
                 {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
             </label>

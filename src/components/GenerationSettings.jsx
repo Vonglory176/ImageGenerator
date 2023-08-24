@@ -14,7 +14,7 @@ export default function GenerationSettings({data, settingsCallback}) {
 
             {/* SAMPLER GOES HERE */}
 
-            {/* <RangeInput field="Batch Size" fieldName="batchSize" min="1" max="20" fieldValue={data.batchSize} settingsCallback={settingsCallback} disabled={true}/> */}
+            <RangeInput field="Batch Size" fieldName="batchSize" min="1" max="5" fieldValue={data.batchSize} settingsCallback={settingsCallback}/>
 
             <RangeInput field="Steps" fieldName="steps" min="1" max="50" fieldValue={data.steps} settingsCallback={settingsCallback} tooltipInfo={"How detailed the image is. Around 30-50 steps is reccomended, though be aware that more steps means longer generation time."}/>
 

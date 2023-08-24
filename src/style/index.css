@@ -12046,9 +12046,6 @@ body {
   gap: 10px;
   padding: 10px 0;
 }
-#root #mainContent-section #generationSettings-div .textInput-div textarea:not([name=seedInput]) {
-  min-height: 84px;
-}
 @media screen and (min-width: 1025px) {
   #root #mainContent-section #generationSettings-div .textInput-div:first-child {
     border-top: none;
@@ -12109,16 +12106,13 @@ body {
   left: 0;
   right: 0;
 }
-#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-control-next, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-control-prev, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-indicators, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-control-next, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-control-prev, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-indicators {
-  display: none;
-}
 #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner {
   height: 100%;
 }
-#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item {
+#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .active, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .active {
   height: 100%;
 }
-#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item img {
+#root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .carousel .carousel-inner .active img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .carousel-item img, #root #mainContent-section #generationDisplay-div .imageDisplay-div .slide .carousel-inner .active img {
   width: 100% !important;
   height: 100% !important;
   -o-object-position: center;

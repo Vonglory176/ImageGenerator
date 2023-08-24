@@ -6,6 +6,9 @@ import Carousel from 'react-bootstrap/Carousel'
 import GenerationDisplay from './components/generationDisplay'
 import GenerationSettings from './components/GenerationSettings'
 
+import { checkGenerate } from "./fetch/checkGenerate.js"
+import { statusGenerate } from "./fetch/statusGenerate.js"
+
 import mainGenerate from "./fetch/mainGenerate"
 import { imageGenerate } from "./fetch/imageGenerate.js"
 
@@ -42,14 +45,20 @@ export default function App() {
         
         try {
           //Making initial call
-          const tempImageData = await imageGenerate("L15qrkaHUZU7qbAUlkIlXA", data)
-          console.log(tempImageData)
-          
+          let tempImageDataArray = []
+          for (let i=0;i<data.batchSize;i++) {
+            let tempImageData = await imageGenerate("L15qrkaHUZU7qbAUlkIlXA", data)
+            tempImageDataArray.push(tempImageData.id)
+            console.log(tempImageDataArray)
+          }
+
           //Saving ID
-          if (tempImageData.id) setId(tempImageData.id)
-          else throw new Error (tempImageData.message)
+          if (tempImageDataArray) setId(tempImageDataArray)
+          else throw new Error (tempImageDataArray)
           
-        }
+          setLoading(prevLoad => {return {...prevLoad, showLoadScreen:false}})
+        
+      }
         catch (error) {
           alert(error)
           resetRequestDisplay()
@@ -67,14 +76,17 @@ export default function App() {
   //Repeat when ID changes
   useEffect(() => {
     console.log(id)
+
     async function startCheckProcess() {
       let tempImageData
       try {
-        tempImageData = await mainGenerate(id, displayCallBack)
+        console.log("Starting Main Generate")
+        tempImageData = await startCheckingProcess()
         if (tempImageData) {
+          let imageKey = 1
           setImageData(tempImageData.map(e => {
             return (
-              <Carousel.Item key="">
+              <Carousel.Item key={imageKey++}>
                 <img alt="Generated picture" src={e.img}/>
               </Carousel.Item>
             )
@@ -84,6 +96,7 @@ export default function App() {
       catch (error) {
         console.log(error)
         if (tempImageData.message) alert(tempImageData.message)
+        cancelGenerate(id)
       }
   
       //Loading screen reset
@@ -92,6 +105,70 @@ export default function App() {
     if (id) startCheckProcess()
   }, [id])
 
+  async function startCheckingProcess() {
+    let localDuration = {
+    done:false,
+    faulted:false,
+    wait_time:0, 
+    queue_position:0,
+    waiting:id.length,
+    processing:0,
+    finished:0,
+    restarted:0,
+    failed:0,
+  }
+
+  let imageArray = []
+
+  let localIdArray = [], checkData
+  localIdArray.push(...id)
+
+  do {
+    
+    //Updating display while waiting
+    for(let i=0;i<localIdArray.length;i++) {
+        console.log("Starting Loop")
+        try {
+            checkData = await checkGenerate(localIdArray[i])
+            console.log(`${localIdArray[i]} data gotten`, checkData)
+            if (checkData.wait_time > localDuration.wait_time) localDuration.wait_time = checkData.wait_time 
+            if (checkData.queue_position > localDuration.queue_position) localDuration.queue_position = checkData.queue_position
+
+            if (checkData.message) throw new Error (checkData.message)
+
+            //Outputting image if complete
+            if(checkData.done) {
+                console.log("Done!")
+                let statusData = await statusGenerate(localIdArray[i])
+                console.log(statusData)
+                if (!statusData.message) imageArray.push(...statusData.generations)
+                else throw new Error (statusData.message)
+
+                localDuration.processing -=1
+                localDuration.finished += 1
+                localIdArray.splice(i,1)
+                console.log(localIdArray)
+            }
+        } 
+        catch(error) {
+          console.log(error)
+          localIdArray.splice(i,1)
+          console.log(localIdArray)
+          localDuration.processing -=1
+          localDuration.failed +=1
+        }
+    }
+    displayCallBack(localDuration)
+    
+  } while(localIdArray && localDuration.finished + localDuration.failed !== id.length)
+
+  localDuration.done = true
+  if (localDuration.failed === id.length) localDuration.faulted = true
+    console.log("Returning")
+    displayCallBack(localDuration)
+    return imageArray ? imageArray : "Error! All images failed to generate."
+  }
+/////////////////////////////////////////////////////////////////////////////////////////
   function resetRequestDisplay() {
     setLoading(prevLoading => {return {...prevLoading, makingRequest:false, showLoadScreen:false}})
     setDurationData(durationDataImport)
@@ -107,7 +184,7 @@ export default function App() {
         }
       })
     }
-    if (checkData !== durationData) {
+    if (checkData) {
       setDurationData({...checkData})
     }
   }

@@ -32,7 +32,7 @@ export default function SelectInput({field, fieldName, defaultOption, settingsCa
     
     return (
         <div className={`${fieldName}Input-div selectorInput-div`}>
-            <label htmlFor={`${fieldName}Input`}>
+            <label>
                 {field}
                 {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
             </label>

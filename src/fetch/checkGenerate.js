@@ -6,7 +6,7 @@ export async function checkGenerate(id) {
 
         const response = await fetch(`https://aihorde.net/api/v2/generate/check/${id}`, options)
         let data = await response.json()
-        console.log(data)
+        // console.log(data)
 
         return data
     }

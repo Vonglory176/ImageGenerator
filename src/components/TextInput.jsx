@@ -5,14 +5,14 @@ export default function TextInput({field, fieldName, fieldValue, settingsCallbac
     return (
         
         <Form.Group className={`${fieldName}Input-div textInput-div`}>
-            <Form.Label htmlFor={`${fieldName}Input`}>
+            <Form.Label htmlFor={`${fieldName}Input-textarea`}>
                 {field}
                 {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
             </Form.Label>
 
             <Form.Control 
                 as="textarea" 
-                name={`${fieldName}Input`} 
+                id={`${fieldName}Input-textarea`} 
                 onChange={e => {settingsCallback({[fieldName]:e.target.value})}}
                 placeholder={`${field} goes here.. ${field === "Prompt" ? "" : "(Optional)"}`}
                 value={fieldValue}

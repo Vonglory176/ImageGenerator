@@ -92,9 +92,9 @@ body {
                 gap: 10px;
                 padding: 10px 0;
 
-                textarea:not([name=seedInput]) {
-                    min-height: 84px;
-                }
+                // textarea:not([name=seedInput]) {
+                //     min-height: 84px;
+                // }
 
 
                 @media screen and (min-width:1025px) {
@@ -180,11 +180,11 @@ body {
                     left: 0;
                     right: 0;
 
-                    .carousel-control-next, .carousel-control-prev, .carousel-indicators {display: none;}
+                    // .carousel-control-next, .carousel-control-prev, .carousel-indicators {display: none;}
                     
                     .carousel-inner{
                         height: 100%;
-                        .carousel-item {
+                        .carousel-item, .active {
                             height: 100%;
                             img {
                                 width: 100% !important;

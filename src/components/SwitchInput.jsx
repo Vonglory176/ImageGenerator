@@ -5,7 +5,7 @@ export default function SwitchInput({field, fieldName, fieldCheck, settingsCallb
 
     return (
         <div className={`${fieldName}Input-div switchInput-div`}>
-            <label htmlFor={`${fieldName}Input`}>
+            <label htmlFor={`${fieldName}Input-switch`}>
                 {field}
                 {tooltipInfo && <TooltipDisplay tooltipInfo={tooltipInfo}/>}
             </label>
