@@ -74,14 +74,17 @@ export default function App() {
   //Return images during a request
   function returnImageCallback(generation, imageKey) {
     // setImageData(prevImageData => {return{...prevImageData, image:generation.img}})
+    // let tempImage = new Image(generation.img)
+    // tempImage.src = 
+    
     setImageData(prevImageData => {return [
       ...prevImageData, 
       <Carousel.Item key={"image" + imageKey}>
-        <img alt="Generated image" src={generation.img} 
-        // onLoad={() => {
+        {/* {tempImage} */}
+        <img alt="Generated image" src={generation.img}/>
+        {/* // onLoad={() => {
         //   if(!loading.imagesLoaded)setLoading(prevLoading => {return{...prevLoading, imagesLoaded:true}})
-        //   }}
-        />
+        //   }} */}
       </Carousel.Item>
       ]
     })

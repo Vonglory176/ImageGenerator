@@ -64,6 +64,11 @@ export default async function mainGenerate(promptData, updateIdCallBack, display
 
                     if (statusData.message) throw new Error (statusData.message)
                     if (statusData.generations[0]) returnImageCallback(statusData.generations[0], localDuration.finished)
+                    // if (statusData.generations[0]) {
+                    //     let image = new Image(statusData.generations[0].img)
+                    //     returnImageCallback(image, localDuration.finished)
+                    // }
+
 
                     localDuration.finished += 1
                     localIdArray.splice(i,1)
